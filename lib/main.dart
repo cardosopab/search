@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'User Search',
       theme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.grey[900],
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
         ),
@@ -56,14 +56,14 @@ class _SearchState extends State<Search> {
 
   List<Map<String, dynamic>> results = [];
   final List<Map<String, dynamic>> adminList = [
-    {"isRed": false, "id": 0, "name": "Liam", "age": 32},
-    {"isRed": false, "id": 1, "name": "Oliver", "age": 29},
-    {"isRed": false, "id": 2, "name": "Elijah", "age": 40},
-    {"isRed": false, "id": 3, "name": "James", "age": 25},
-    {"isRed": true, "id": 4, "name": "William", "age": 35},
-    {"isRed": true, "id": 5, "name": "Benjamin", "age": 21},
-    {"isRed": false, "id": 6, "name": "Colin", "age": 55},
-    {"isRed": false, "id": 7, "name": "Lucas", "age": 30},
+    {"isRed": false, "id": 0, "name": "Liam", "date": "11/25/2019"},
+    {"isRed": false, "id": 1, "name": "Oliver", "date": "11/25/2019"},
+    {"isRed": false, "id": 2, "name": "Elijah", "date": "11/25/2019"},
+    {"isRed": false, "id": 3, "name": "James", "date": "11/25/2019"},
+    {"isRed": true, "id": 4, "name": "William", "date": "11/25/2019"},
+    {"isRed": true, "id": 5, "name": "Benjamin", "date": "11/25/2019"},
+    {"isRed": false, "id": 6, "name": "Colin", "date": "11/25/2019"},
+    {"isRed": false, "id": 7, "name": "Lucas", "date": "11/25/2019"},
   ];
   final TextEditingController searchController = TextEditingController();
   void search(String value) {
@@ -85,12 +85,18 @@ class _SearchState extends State<Search> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("User Search"),
-        leading: const Icon(Icons.chevron_left),
+        title: const Text("Add an Admin"),
+        leading: const Icon(
+          Icons.chevron_left,
+          size: 40,
+        ),
         actions: const [
           Padding(
             padding: EdgeInsets.all(8.0),
-            child: Icon(Icons.heart_broken),
+            child: Icon(
+              Icons.favorite,
+              size: 40,
+            ),
           ),
         ],
       ),
@@ -104,7 +110,7 @@ class _SearchState extends State<Search> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey[900],
+                      color: Colors.grey[800],
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Padding(
@@ -137,7 +143,13 @@ class _SearchState extends State<Search> {
                 ),
               ),
               isVisible
-                  ? TextButton(onPressed: (() => deleteSearch()), child: const Text("Cancel"))
+                  ? TextButton(
+                      onPressed: (() => deleteSearch()),
+                      child: const Text(
+                        "Cancel",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    )
                   : const SizedBox(
                       width: 0,
                     )
@@ -191,7 +203,7 @@ class _SearchState extends State<Search> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8),
-                                child: Text('${results[index]["age"].toString()} years old'),
+                                child: Text('Member since ${results[index]["date"].toString()}'),
                               ),
                             ],
                           ),
