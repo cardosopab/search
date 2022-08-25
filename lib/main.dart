@@ -111,6 +111,8 @@ class _SearchState extends State<Search> {
               itemBuilder: (context, index) {
                 int imgIdx = results[index]["id"];
                 bool isRed = results[index]["isRed"];
+                // created my own ListTile, because the CircleAvatar looked too small
+
                 // return Card(
                 // child: ListTile(
                 //   leading: CircleAvatar(
