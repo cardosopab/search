@@ -125,46 +125,44 @@ class _SearchState extends State<Search> {
                 //   subtitle: Text('${results[index]["age"].toString()} years old'),
                 //   trailing: const Icon(Icons.more_horiz),
                 // ),
-                return Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+                return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircleAvatar(
+                            radius: 43,
+                            backgroundColor: isRed ? Colors.red : Colors.green[400],
                             child: CircleAvatar(
-                              radius: 43,
-                              backgroundColor: isRed ? Colors.red : Colors.green[400],
-                              child: CircleAvatar(
-                                radius: 40,
-                                backgroundImage: AssetImage("assets/lego$imgIdx.jpg"),
+                              radius: 40,
+                              backgroundImage: AssetImage("assets/lego$imgIdx.jpg"),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                child: Text(results[index]['name']),
                               ),
-                            ),
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Text('${results[index]["age"].toString()} years old'),
+                              ),
+                            ],
                           ),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                  child: Text(results[index]['name']),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Text('${results[index]["age"].toString()} years old'),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Icon(
-                            Icons.more_horiz,
-                            size: 40,
-                          ),
-                        ],
-                        // ),
-                      )),
-                );
+                        ),
+                        const Icon(
+                          Icons.more_horiz,
+                          size: 40,
+                        ),
+                      ],
+                      // ),
+                    ));
               },
             ),
           ),
