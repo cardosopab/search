@@ -32,6 +32,28 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  bool isVisible = false;
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    focusNode = FocusNode();
+
+    // listen to focus changes
+    focusNode.addListener(() => setState(() {
+          deleteSearch();
+          isVisible = !isVisible;
+          print(isVisible);
+        }));
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose();
+    super.dispose();
+  }
+
   List<Map<String, dynamic>> results = [];
   final List<Map<String, dynamic>> adminList = [
     {"isRed": false, "id": 0, "name": "Liam", "age": 32},
@@ -75,35 +97,51 @@ class _SearchState extends State<Search> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[800],
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                child: TextField(
-                  controller: searchController,
-                  onChanged: (value) {
-                    search(value);
-                    setState(() {});
-                  },
-                  decoration: InputDecoration(
-                      prefixIconConstraints: const BoxConstraints(minWidth: 50),
-                      hintText: "Search User...",
-                      iconColor: Colors.grey,
-                      icon: const Icon(Icons.search),
-                      border: InputBorder.none,
-                      suffixIcon: IconButton(
-                        icon: const Icon(Icons.cancel),
-                        onPressed: (() => deleteSearch()),
+          Row(
+            children: [
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[900],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                      child: TextField(
+                        focusNode: focusNode,
+                        controller: searchController,
+                        onChanged: (value) {
+                          search(value);
+                          setState(() {});
+                        },
+                        decoration: InputDecoration(
+                            prefixIconConstraints: const BoxConstraints(minWidth: 50),
+                            hintText: "Search User...",
+                            iconColor: Colors.grey,
+                            icon: const Icon(Icons.search),
+                            border: InputBorder.none,
+                            suffixIcon: isVisible
+                                ? IconButton(
+                                    icon: const Icon(Icons.cancel),
+                                    onPressed: (() => deleteSearch()),
+                                  )
+                                : const SizedBox(
+                                    width: 0,
+                                  ),
+                            suffixIconColor: Colors.grey),
                       ),
-                      suffixIconColor: Colors.grey),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              isVisible
+                  ? TextButton(onPressed: (() => deleteSearch()), child: const Text("Cancel"))
+                  : const SizedBox(
+                      width: 0,
+                    )
+            ],
           ),
           Expanded(
             child: ListView.builder(
